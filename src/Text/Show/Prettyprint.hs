@@ -3,7 +3,10 @@
 
 -- | Format a 'show'-generated string to make it nicer to read.
 --
--- >>> (prettyShow . Data.Map.fromList) [("hello", Just True), ("world", Nothing), ("!", Just False)]
+-- >>> :{
+-- (putStrLn . prettyShow . Data.Map.fromList)
+--     [("hello", Just True), ("world", Nothing), ("!", Just False)]
+-- :}
 -- fromList [("!",Just False)
 --          ,("hello",Just True)
 --          ,("world",Nothing)]
