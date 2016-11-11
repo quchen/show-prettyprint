@@ -1,0 +1,27 @@
+name:                show-prettyprint
+version:             0.1.0.0
+synopsis:            Robust prettyprinter for output of auto-generated Show
+                     instances
+description:         See README.md
+homepage:            https://github.com/quchen/show-prettyprint#readme
+license:             BSD3
+license-file:        LICENSE
+author:              David Luposchainsky <dluposchainsky (λ) google>
+maintainer:          David Luposchainsky <dluposchainsky (λ) google>
+copyright:           David Luposchainsky, 2016
+category:            User Interfaces, Text
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Text.Show.Prettyprint
+  build-depends:       base >= 4.7 && < 5
+                     , trifecta
+                     , wl-pprint
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/quchen/show-prettyprint
