@@ -1,5 +1,5 @@
 name:                show-prettyprint
-version:             0.1.0.0
+version:             0.1.0.1
 synopsis:            Robust prettyprinter for output of auto-generated Show
                      instances
 description:         See README.md
@@ -11,7 +11,8 @@ maintainer:          David Luposchainsky <dluposchainsky (λ) google>
 copyright:           David Luposchainsky, 2016
 category:            User Interfaces, Text
 build-type:          Simple
--- extra-source-files:
+extra-source-files:  README.md
+                   , .stylish-haskell.yaml
 cabal-version:       >=1.10
 
 library
