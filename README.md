@@ -3,7 +3,7 @@ Prettyprint `Show` output
 
 Output of nested data structures by `Show` instances is often very hard to read.
 This package offers a simple function to insert line breaks and indentation into
-that ouput so that the semantics are unchanged, but makes it *much* easier to
+that output so that the semantics are unchanged, but makes it *much* easier to
 read.
 
 The package does not rely on a parser for actual Haskell; instead, it merely
