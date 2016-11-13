@@ -14,15 +14,15 @@ For example, consider this nested data structure:
 
 ```haskell
 nestedExample = fromList
-        [ ("hello", Left (Pair True ()))
-        , ("world", Right (Record { r1 = ("Foo", -1.2e34), r2 = 123 }))
-        , ("!", Left (Pair False ())) ]
+    [ ("hello", Left  (Pair True ()))
+    , ("world", Right (Record { r1 = ('c', -1.2e34), r2 = 123 }))
+    , ("!"    , Left  (Pair False ())) ]
 ```
 
 Applying show to it results in the fairly dense representation
 
 ```haskell
-fromList [("!",Left (Pair False ())),("hello",Left (Pair True ())),("world",Right (Record {r1 = ("Foo",-1.2e34), r2 = 123}))]
+fromList [("!",Left (Pair False ())),("hello",Left (Pair True ())),("world",Right (Record {r1 = ('c',-1.2e34), r2 = 123}))]
 ```
 
 With the functions defined in this module, we can make this output a bit more
@@ -33,7 +33,7 @@ fromList [("!"
           ,Left (Pair False ()))
          ,("hello",Left (Pair True ()))
          ,("world"
-          ,Right (Record {r1 = ("Foo"
+          ,Right (Record {r1 = ('c'
                                ,-1.2e34)
                          ,r2 = 123}))]
 ```
