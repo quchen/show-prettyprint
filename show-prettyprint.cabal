@@ -26,6 +26,7 @@ library
                      -- Transitive dependency of Trifecta, so let the
                      -- version be sorted out by that
                      , ansi-wl-pprint
+  ghc-options:         -Wall
   default-language:    Haskell2010
 
 test-suite doctest

@@ -17,7 +17,6 @@ module Text.Show.Prettyprint.Diagnostic (
 
 
 
-import Control.Applicative
 import Data.Monoid
 import Text.PrettyPrint.ANSI.Leijen as Ppr hiding ((<>))
 import Text.Trifecta                as Tri

@@ -7,7 +7,6 @@ module Text.Show.Prettyprint.Internal where
 
 
 import Control.Applicative
-import Data.Monoid
 import Text.PrettyPrint.ANSI.Leijen as Ppr hiding ((<>))
 import Text.Trifecta                as Tri
 
