@@ -18,6 +18,8 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Text.Show.Prettyprint
+                     , Text.Show.Prettyprint.Diagnostic
+                     , Text.Show.Prettyprint.Internal
   build-depends:       base >= 4.7 && < 5
                      , trifecta >= 1.6
 
