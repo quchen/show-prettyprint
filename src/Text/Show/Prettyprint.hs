@@ -25,8 +25,8 @@ module Text.Show.Prettyprint (
 
 import Control.Applicative
 import Data.Monoid
-import Text.PrettyPrint.Leijen as Ppr hiding ((<>))
-import Text.Trifecta           as Tri
+import Text.PrettyPrint.ANSI.Leijen as Ppr hiding ((<>))
+import Text.Trifecta                as Tri
 
 
 
