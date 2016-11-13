@@ -10,72 +10,30 @@ The package does not rely on a parser for actual Haskell; instead, it merely
 reacts on parentheses, commas and the like. This makes it fairly robust even in
 the face of invalid `Show` instances, that may not produce valid Haskell code.
 
-
-
-## Examples
-
-### Artificial
+For example, consider this nested data structure:
 
 ```haskell
-Hello Foo ("(Bar", Haha) (Baz (A { foo = C, bar = D, qux = (E,"He)llo World!",G,
-    H,[A,B,c,d,e,Fghi]) } ) (B,C) [Baz A1 B2, (Baz A3 (B4)), (Baz A5 (B6)), (Baz
-    (A7) B8)]) (Foo) (Bar) (Baz (A) (B))
-
-==>
-
-Hello Foo ("(Bar",Haha)
-          (Baz (A {foo = C
-                  ,bar = D
-                  ,qux = (E
-                         ,"He)llo World!"
-                         ,G
-                         ,H
-                         ,[A,B,c,d,e,Fghi])})
-               (B,C)
-               [Baz A1 B2
-               ,(Baz A3 (B4))
-               ,(Baz A5 (B6))
-               ,(Baz (A7) B8)])
-          (Foo)
-          (Bar)
-          (Baz (A) (B))
+nestedExample = fromList
+        [ ("hello", Left (Pair True ()))
+        , ("world", Right (Record { r1 = ("Foo", -1.2e34), r2 = 123 }))
+        , ("!", Left (Pair False ())) ]
 ```
 
-### Inspired by a real AST
+Applying show to it results in the fairly dense representation
 
 ```haskell
-Set  (fromList [(Name "A string with (parenthesis",Ann  (Entry (Quality 1 1)
-    (Ann  False) (Ann  (Map [Ann  (Bound (Ann  (Id "lorem"))),Ann  (Variable
-    (Ann  (Id "ipsum")))])))),(Name "string",Ann  (Entry (Quality 1 1) (Ann
-    True) (Ann  (Internal (Ann  (Reduce (Ann  (Id "dolor")) (Ann  (Id "sit")))))
-    ))),(Name "Another } here",Ann  (Entry (Quality 1 1) (Ann  (Or [Ann  (Not
-    (Ann  (Is (Ann  Flagged) (Ann  Type) (Ann  (Multi [Ann  (Literal (Ann  One))
-    ]))))),Ann  (Is (Ann  Flagged) (Ann  Type) (Ann  (Multi [Ann  (Literal (Ann
-    Three))]))),Ann  (Is (Ann  Flagged) (Ann  Type) (Ann  (Multi [Ann  (Literal
-    (Ann  Two))])))])) (Ann  (Internal (Ann  (Concat (Ann  (Id "amet"))))))))])
+fromList [("!",Left (Pair False ())),("hello",Left (Pair True ())),("world",Right (Record {r1 = ("Foo",-1.2e34), r2 = 123}))]
+```
 
-==>
+With the functions defined in this module, we can make this output a bit more
+readable,
 
-Set (fromList [(Name "A string with (parenthesis"
-               ,Ann (Entry (Quality 1 1)
-                           (Ann False)
-                           (Ann (Map [Ann (Bound (Ann (Id "lorem")))
-                                     ,Ann (Variable (Ann (Id "ipsum")))]))))
-              ,(Name "string"
-               ,Ann (Entry (Quality 1 1)
-                           (Ann True)
-                           (Ann (Internal (Ann (Reduce (Ann (Id "dolor"))
-                                                       (Ann (Id "sit"))))))))
-              ,(Name "Another } here"
-               ,Ann (Entry (Quality 1 1)
-                           (Ann (Or [Ann (Not (Ann (Is (Ann Flagged)
-                                                       (Ann Type)
-                                                       (Ann (Multi [Ann (Literal (Ann One))])))))
-                                    ,Ann (Is (Ann Flagged)
-                                             (Ann Type)
-                                             (Ann (Multi [Ann (Literal (Ann Three))])))
-                                    ,Ann (Is (Ann Flagged)
-                                             (Ann Type)
-                                             (Ann (Multi [Ann (Literal (Ann Two))])))]))
-                           (Ann (Internal (Ann (Concat (Ann (Id "amet"))))))))])
+```haskell
+fromList [("!"
+          ,Left (Pair False ()))
+         ,("hello",Left (Pair True ()))
+         ,("world"
+          ,Right (Record {r1 = ("Foo"
+                               ,-1.2e34)
+                         ,r2 = 123}))]
 ```
