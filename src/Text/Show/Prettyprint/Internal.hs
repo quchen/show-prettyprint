@@ -2,7 +2,19 @@
 
 -- | __This module may change arbitrarily between versions.__ It is exposed only
 -- for documentary purposes.
-module Text.Show.Prettyprint.Internal where
+module Text.Show.Prettyprint.Internal (
+    shownP,
+    valueP,
+    identifierP,
+    numberP,
+    stringLitP,
+    charLitP,
+    argP,
+    unitP,
+    tupleP,
+    listP,
+    recordP,
+) where
 
 
 
@@ -32,7 +44,7 @@ shownP = valueP <* eof
 -- Just ('c',Left ())
 valueP :: Parser Doc
 valueP = do
-    thing <- choice [identifierP, numberP, stringP, charP]
+    thing <- choice [identifierP, numberP, stringLitP, charLitP]
     args <- many argP
     pure (if null args
         then thing
@@ -62,21 +74,19 @@ numberP = p <?> "number"
         Left i -> pure (Ppr.integer i)
         Right d -> pure (Ppr.double d)
 
--- | A quoted string literal
---
--- >>> testParse stringP "\"Hello world!\""
+-- |
+-- >>> testParse stringLitP "\"Hello world!\""
 -- "Hello world!"
-stringP :: Parser Doc
-stringP = token (p <?> "string literal")
+stringLitP :: Parser Doc
+stringLitP = token (p <?> "string literal")
   where
     p = fmap (dquotes . Ppr.string) stringLiteral
 
--- | A quoted char literal
---
--- >>> testParse charP "'c'"
+-- |
+-- >>> testParse charLitP "'c'"
 -- 'c'
-charP :: Parser Doc
-charP = token (p <?> "char literal")
+charLitP :: Parser Doc
+charLitP = token (p <?> "char literal")
   where
     p = fmap (squotes . Ppr.char) Tri.charLiteral
 
@@ -90,8 +100,7 @@ charP = token (p <?> "char literal")
 argP :: Parser Doc
 argP = (token . choice) [unitP, tupleP, listP, recordP, valueP]
 
--- | '()' prettyparser
---
+-- |
 -- >>> testParse unitP "()"
 -- ()
 unitP :: Parser Doc
@@ -112,18 +121,18 @@ tupleP = p <?> "tuple"
         xs <- many (Tri.comma *> argP)
         pure (x:xs) ))
 
--- | List prettyparser
+-- | List prettyparser. Lists can be heterogeneous, which is realistic if we
+-- consider ill-defined Show instances.
 --
--- >>> testParse listP "[\"Hello\", \"world\"]"
--- ["Hello","world"]
+-- >>> testParse listP "[\"Hello\", World]"
+-- ["Hello",World]
 listP :: Parser Doc
 listP = p <?> "list"
   where
     p = fmap (encloseSep lbracket rbracket Ppr.comma)
              (Tri.brackets (sepBy argP Tri.comma))
 
--- | Record syntax prettyparser
---
+-- |
 -- >>> testParse recordP "{ r1 = (), r2 = Just True }"
 -- {r1 = (),r2 = Just True}
 recordP :: Parser Doc
