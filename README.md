@@ -37,3 +37,20 @@ fromList [("!"
                                ,-1.2e34)
                          ,r2 = 123}))]
 ```
+
+Related packages
+================
+
+There is a similar package on Hackage called *[pretty-show][1]*, which takes a
+more flexible approach to prettyprinting show-formatted strings. This has its
+advantages and disadvantages.
+
+&nbsp;        | prettyprint-show (this)            | [pretty-show][1] (alternative)
+------------- | ---------------------------------- | -----------------------------
+Use case      | fire and forget, debugging         | flexible, working with the output
+API           | One core value (rest: convenience) | Multiple combinable values
+Extensibility | low, not intended                  | decent, e.g. HTML rendering
+Robustness    | high: only cares about parentheses, bugs in bad output can be hacked around | medium: relies on output that follows Haskell's lexical structure
+
+
+[1]: http://hackage.haskell.org/package/pretty-show
