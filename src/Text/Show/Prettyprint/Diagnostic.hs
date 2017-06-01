@@ -17,9 +17,9 @@ module Text.Show.Prettyprint.Diagnostic (
 
 
 
-import Data.Monoid
-import Text.PrettyPrint.ANSI.Leijen as Ppr hiding ((<>))
-import Text.Trifecta                as Tri
+import           Data.Text.Prettyprint.Doc
+import qualified Text.PrettyPrint.ANSI.Leijen as OldAnsiPpr
+import           Text.Trifecta                as Tri
 
 import Text.Show.Prettyprint.Internal
 
@@ -30,7 +30,7 @@ import Text.Show.Prettyprint.Internal
 prettifyShowErr :: String -> String
 prettifyShowErr s = case parseString shownP mempty s of
     Success x -> show x
-    Failure ErrInfo{ _errDoc = e } -> "ERROR " <> show (plain e)
+    Failure ErrInfo{ _errDoc = e } -> "ERROR " <> show (OldAnsiPpr.plain e)
 
 -- | 'prettifyShowErr' with the 'show' baked in.
 prettyShowErr :: Show a => a -> String

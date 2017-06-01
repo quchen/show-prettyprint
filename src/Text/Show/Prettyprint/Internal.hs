@@ -19,12 +19,14 @@ module Text.Show.Prettyprint.Internal (
 
 
 import Control.Applicative
-import Text.PrettyPrint.ANSI.Leijen as Ppr hiding ((<>))
-import Text.Trifecta                as Tri
+import Data.Text.Prettyprint.Doc as Ppr
+import Text.Trifecta             as Tri
 
 
 
 -- $setup
+--
+-- >>> import Text.PrettyPrint.ANSI.Leijen (plain)
 -- >>> :{
 -- let testParse p s = case parseString p mempty s of
 --         Success x -> print x
@@ -34,7 +36,7 @@ import Text.Trifecta                as Tri
 
 
 -- | Prettyparser for a 'show'-generated string
-shownP :: Parser Doc
+shownP :: Parser (Doc ann)
 shownP = valueP <* eof
 
 -- | Prettyparser for a constructor, which is roughly a word applied to
@@ -42,7 +44,7 @@ shownP = valueP <* eof
 --
 -- >>> testParse valueP "Just ('c', Left ())"
 -- Just ('c',Left ())
-valueP :: Parser Doc
+valueP :: Parser (Doc ann)
 valueP = do
     thing <- choice [identifierP, numberP, stringLitP, charLitP]
     args <- many argP
@@ -55,10 +57,10 @@ valueP = do
 --
 -- >>> testParse identifierP "_foo'bar"
 -- _foo'bar
-identifierP :: Parser Doc
+identifierP :: Parser (Doc ann)
 identifierP = token (p <?> "identifier")
   where
-    p = fmap Ppr.text (some (alphaNum <|> oneOf "'_"))
+    p = fmap Ppr.pretty (some (alphaNum <|> oneOf "'_"))
 
 -- | Number in integer or scientific notation.
 --
@@ -67,28 +69,28 @@ identifierP = token (p <?> "identifier")
 --
 -- >>> testParse numberP "-123.4e56"
 -- -1.234e58
-numberP :: Parser Doc
+numberP :: Parser (Doc ann)
 numberP = p <?> "number"
   where
     p = integerOrDouble >>= \case
-        Left i -> pure (Ppr.integer i)
-        Right d -> pure (Ppr.double d)
+        Left i -> pure (pretty i)
+        Right d -> pure (pretty d)
 
 -- |
 -- >>> testParse stringLitP "\"Hello world!\""
 -- "Hello world!"
-stringLitP :: Parser Doc
+stringLitP :: Parser (Doc ann)
 stringLitP = token (p <?> "string literal")
   where
-    p = fmap (dquotes . Ppr.string) stringLiteral
+    p = fmap (dquotes . pretty) (stringLiteral :: Parser String)
 
 -- |
 -- >>> testParse charLitP "'c'"
 -- 'c'
-charLitP :: Parser Doc
+charLitP :: Parser (Doc ann)
 charLitP = token (p <?> "char literal")
   where
-    p = fmap (squotes . Ppr.char) Tri.charLiteral
+    p = fmap (squotes . pretty) Tri.charLiteral
 
 -- | Anything that could be considered an argument to something else.
 --
@@ -97,23 +99,23 @@ charLitP = token (p <?> "char literal")
 --
 -- >>> testParse argP "['h', 'e', 'l', 'l', 'o']"
 -- ['h','e','l','l','o']
-argP :: Parser Doc
+argP :: Parser (Doc ann)
 argP = (token . choice) [unitP, tupleP, listP, recordP, valueP]
 
 -- |
 -- >>> testParse unitP "()"
 -- ()
-unitP :: Parser Doc
+unitP :: Parser (Doc ann)
 unitP = p <?> "unit"
   where
-    p = fmap Ppr.string (Tri.string "()")
+    p = fmap pretty (Tri.string "()")
 
 -- | Prettyparser for tuples from size 1. Since 1-tuples are just parenthesized
 -- expressions to first order approximation, this parser handles those as well.
 --
 -- >>> testParse tupleP "((), True, 'c')"
 -- ((),True,'c')
-tupleP :: Parser Doc
+tupleP :: Parser (Doc ann)
 tupleP = p <?> "tuple"
   where
     p = fmap (encloseSep lparen rparen Ppr.comma) (Tri.parens (do
@@ -126,7 +128,7 @@ tupleP = p <?> "tuple"
 --
 -- >>> testParse listP "[\"Hello\", World]"
 -- ["Hello",World]
-listP :: Parser Doc
+listP :: Parser (Doc ann)
 listP = p <?> "list"
   where
     p = fmap (encloseSep lbracket rbracket Ppr.comma)
@@ -135,7 +137,7 @@ listP = p <?> "list"
 -- |
 -- >>> testParse recordP "{ r1 = (), r2 = Just True }"
 -- {r1 = (),r2 = Just True}
-recordP :: Parser Doc
+recordP :: Parser (Doc ann)
 recordP = p <?> "record"
   where
     p = fmap (encloseSep lbrace rbrace Ppr.comma) (Tri.braces (sepBy recordEntryP Tri.comma))
@@ -143,4 +145,4 @@ recordP = p <?> "record"
         lhs <- token identifierP
         _ <- token (Tri.char '=')
         rhs <- argP
-        pure (lhs <+> Ppr.string "=" <+> rhs)
+        pure (lhs <+> pretty "=" <+> rhs)
