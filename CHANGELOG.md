@@ -1,3 +1,8 @@
+# 0.2.0.1
+
+Tagged the wrong version as 0.2 on Github. Releasing a new version with an
+updated tag to remedy this.
+
 # 0.2
 
 Prettyprint based on the `prettyprinter` library, instead of `ansi-wl-pprint`.
