@@ -2,5 +2,6 @@ resolver: lts-10.6
 packages:
     - '.'
 extra-deps:
+    - 'prettyprinter-1.2'
 flags: {}
 extra-package-dbs: []

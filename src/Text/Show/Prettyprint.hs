@@ -18,13 +18,9 @@
 -- readable,
 --
 -- >>> prettyPrint nestedExample
--- fromList [("!"
---           ,Left (Pair False ()))
+-- fromList [("!",Left (Pair False ()))
 --          ,("hello",Left (Pair True ()))
---          ,("world"
---           ,Right (Record {r1 = ('c'
---                                ,-1.2e34)
---                          ,r2 = 123}))]
+--          ,("world",Right (Record {r1 = ('c',-1.2e34),r2 = 123}))]
 module Text.Show.Prettyprint (
     prettifyShow,
     prettyShow,
