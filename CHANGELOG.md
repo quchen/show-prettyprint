@@ -1,6 +1,11 @@
-# 0.2.1
+# 0.2.{1,2}
 
-Add function
+Add functions to prettify to `Doc` instead of just supporting `String`,
+
+```haskell
+prettifyToDoc :: String -> Doc ann
+prettyShowDoc :: Show a => a -> Doc ann
+```
 
 # 0.2.0.1
 

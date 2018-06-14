@@ -26,6 +26,7 @@ module Text.Show.Prettyprint (
     prettifyToDoc,
 
     prettyShow,
+    prettyShowDoc,
     prettyPrint,
 ) where
 
@@ -64,3 +65,7 @@ prettifyToDoc :: String -> Doc ann
 prettifyToDoc s = case parseShowString s of
     Success x -> x
     Failure _ -> pretty s
+
+-- | 'prettifyToDoc' with the 'show' baked in.
+prettyShowDoc :: Show a => a -> Doc ann
+prettyShowDoc = prettifyToDoc . show
