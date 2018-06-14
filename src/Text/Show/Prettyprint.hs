@@ -23,6 +23,8 @@
 --          ,("world",Right (Record {r1 = ('c',-1.2e34),r2 = 123}))]
 module Text.Show.Prettyprint (
     prettifyShow,
+    prettifyToDoc,
+
     prettyShow,
     prettyPrint,
 ) where
@@ -31,6 +33,7 @@ module Text.Show.Prettyprint (
 
 import Text.Trifecta
 
+import Data.Text.Prettyprint.Doc      (Doc, pretty)
 import Text.Show.Prettyprint.Internal
 
 
@@ -40,12 +43,10 @@ import Text.Show.Prettyprint.Internal
 -- >>> data Pair a b = Pair a b deriving Show
 -- >>> import Data.Map (fromList)
 
-
-
 -- | Prettyprint a string produced by 'show'. On parse error, silently fall back
 -- to a non-prettyprinted version.
 prettifyShow :: String -> String
-prettifyShow s = case parseString shownP mempty s of
+prettifyShow s = case parseShowString s of
     Success x -> show x
     Failure _ -> s
 
@@ -56,3 +57,10 @@ prettyShow = prettifyShow . show
 -- | 'prettifyShow' with the 'show' and the 'putStrLn' baked in.
 prettyPrint :: Show a => a -> IO ()
 prettyPrint = putStrLn . prettyShow
+
+-- | Like 'prettifyShow', but maps to a 'Doc' for easier interoperability with
+-- the @prettyprinter@ package.
+prettifyToDoc :: String -> Doc ann
+prettifyToDoc s = case parseShowString s of
+    Success x -> x
+    Failure _ -> pretty s

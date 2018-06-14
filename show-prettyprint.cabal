@@ -1,5 +1,5 @@
 name:                show-prettyprint
-version:             0.2.0.2
+version:             0.2.1
 synopsis:            Robust prettyprinter for output of auto-generated Show
                      instances
 description:         See README.md

@@ -1,3 +1,7 @@
+# 0.2.1
+
+Add function
+
 # 0.2.0.1
 
 Tagged the wrong version as 0.2 on Github. Releasing a new version with an

@@ -3,6 +3,7 @@
 -- | __This module may change arbitrarily between versions.__ It is exposed only
 -- for documentary purposes.
 module Text.Show.Prettyprint.Internal (
+    parseShowString,
     shownP,
     valueP,
     identifierP,
@@ -34,6 +35,8 @@ import Text.Trifecta             as Tri
 -- :}
 
 
+parseShowString :: String -> Result (Doc ann)
+parseShowString = parseString shownP mempty
 
 -- | Prettyparser for a 'show'-generated string
 shownP :: Parser (Doc ann)
