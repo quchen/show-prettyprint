@@ -158,4 +158,4 @@ recordP = p <?> "record"
         lhs <- token identifierP
         _ <- token (Tri.char '=')
         rhs <- argP
-        pure (lhs <+> pretty "=" <+> rhs)
+        pure (lhs <+> pretty '=' <+> rhs)

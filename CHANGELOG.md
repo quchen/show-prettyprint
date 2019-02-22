@@ -1,6 +1,7 @@
 # 0.2.3
 
-Fix escaping of backslashes (#5)
+- Fix escaping of backslashes (#5)
+- Fix a bug with ambiguous types on newer cabal new-repl runs (#4)
 
 # 0.2.{1,2}
 
