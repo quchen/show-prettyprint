@@ -1,3 +1,7 @@
+# 0.2.3
+
+Fix escaping of backslashes (#5)
+
 # 0.2.{1,2}
 
 Add functions to prettify to `Doc` instead of just supporting `String`,

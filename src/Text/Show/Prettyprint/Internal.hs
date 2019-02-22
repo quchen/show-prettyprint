@@ -80,12 +80,17 @@ numberP = p <?> "number"
         Right d -> pure (pretty d)
 
 -- |
--- >>> testParse stringLitP "\"Hello world!\""
--- "Hello world!"
+-- >>> testParse stringLitP "\"Hello\\\\ world!\""
+-- "Hello\\ world!"
 stringLitP :: Parser (Doc ann)
 stringLitP = token (p <?> "string literal")
   where
-    p = fmap (dquotes . pretty) (stringLiteral :: Parser String)
+    p = fmap (dquotes . pretty . concatMap escapeBackslashes)
+             (stringLiteral :: Parser String)
+
+escapeBackslashes :: Char -> String
+escapeBackslashes '\\' = "\\\\"
+escapeBackslashes x = [x]
 
 -- |
 -- >>> testParse charLitP "'c'"
@@ -93,7 +98,12 @@ stringLitP = token (p <?> "string literal")
 charLitP :: Parser (Doc ann)
 charLitP = token (p <?> "char literal")
   where
-    p = fmap (squotes . pretty) Tri.charLiteral
+    p = fmap (squotes . pretty . escapeBackslashes) Tri.charLiteral
+
+-- $
+-- Correct backslash handling
+-- >>> testParse charLitP "'\\\\'"
+-- '\\'
 
 -- | Anything that could be considered an argument to something else.
 --
