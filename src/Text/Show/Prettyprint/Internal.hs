@@ -2,6 +2,30 @@
 
 -- | __This module may change arbitrarily between versions.__ It is exposed only
 -- for documentary purposes.
+--
+-- It's also home to this crazier doctest:
+--
+-- >>> :{
+-- testParse valueP (concat
+--     ["ApiGroup {name = \"API Key\" ,endpoints = [Endpoint {path = "
+--     ,"\"/v1/auth/info\" ,description = \"Retrieve information about the"
+--     ," current API key.\" ,needsAPIKey = \"Yes\" ,method = \"GET\" ,"
+--     ,"requiredAccess = \"\"} ,Endpoint {path = \"/v1/auth/info\" ,"
+--     ,"description = \"Retrieve information about the current API key.\" ,"
+--     ,"needsAPIKey = \"Yes\" ,method = \"GET\" ,requiredAccess = \"\"}]}]"
+--     ])
+-- :}
+-- ApiGroup {name = "API Key"
+--          ,endpoints = [Endpoint {path = "/v1/auth/info"
+--                                 ,description = "Retrieve information about the current API key."
+--                                 ,needsAPIKey = "Yes"
+--                                 ,method = "GET"
+--                                 ,requiredAccess = ""}
+--                       ,Endpoint {path = "/v1/auth/info"
+--                                 ,description = "Retrieve information about the current API key."
+--                                 ,needsAPIKey = "Yes"
+--                                 ,method = "GET"
+--                                 ,requiredAccess = ""}]}
 module Text.Show.Prettyprint.Internal (
     parseShowString,
     shownP,
@@ -158,4 +182,4 @@ recordP = p <?> "record"
         lhs <- token identifierP
         _ <- token (Tri.char '=')
         rhs <- argP
-        pure (lhs <+> pretty '=' <+> rhs)
+        pure (lhs <+> pretty '=' <+> align rhs)
