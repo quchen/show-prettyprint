@@ -49,7 +49,7 @@ shownP = valueP <* eof
 -- Just ('c',Left ())
 valueP :: Parser (Doc ann)
 valueP = do
-    thing <- choice [identifierP, numberP, stringLitP, charLitP]
+    thing <- choice [identifierP, numberP, stringLitP, charLitP, listP]
     args <- many argP
     pure (if null args
         then thing
