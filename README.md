@@ -23,19 +23,13 @@ Hello Foo ("(Bar", Haha) (Baz (A { foo = C, bar = D, qux = (E,"He)llo World!",G,
 
 ==>
 
+
 Hello Foo ("(Bar",Haha)
           (Baz (A {foo = C
                   ,bar = D
-                  ,qux = (E
-                         ,"He)llo World!"
-                         ,G
-                         ,H
-                         ,[A,B,c,d,e,Fghi])})
+                  ,qux = (E,"He)llo World!",G,H,[A,B,c,d,e,Fghi])})
                (B,C)
-               [Baz A1 B2
-               ,(Baz A3 (B4))
-               ,(Baz A5 (B6))
-               ,(Baz (A7) B8)])
+               [Baz A1 B2,(Baz A3 (B4)),(Baz A5 (B6)),(Baz (A7) B8)])
           (Foo)
           (Bar)
           (Baz (A) (B))
