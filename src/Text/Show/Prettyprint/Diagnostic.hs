@@ -17,7 +17,6 @@ module Text.Show.Prettyprint.Diagnostic (
 
 
 
-import           Data.Text.Prettyprint.Doc
 import qualified Text.PrettyPrint.ANSI.Leijen as OldAnsiPpr
 import           Text.Trifecta                as Tri
 
