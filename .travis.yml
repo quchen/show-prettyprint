@@ -1,0 +1,21 @@
+sudo: false
+language: c
+addons:
+    apt:
+        packages:
+            - libgmp-dev
+before_install:
+    - export PATH="$HOME/.local/bin:$PATH"
+    - travis_retry scripts/ci/install/stack
+    - |
+      _stack() {
+          stack --no-terminal "$@"
+      }
+    - _stack setup
+script:
+    - _stack test
+    - _stack haddock --no-haddock-deps
+    - _stack sdist
+cache:
+    directories:
+        - $HOME/.stack

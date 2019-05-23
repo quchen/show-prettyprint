@@ -1,3 +1,5 @@
+[![](https://travis-ci.org/quchen/show-prettyprint.svg?branch=master)](https://travis-ci.org/quchen/show-prettyprint)
+
 Prettyprint `Show` output
 =========================
 
