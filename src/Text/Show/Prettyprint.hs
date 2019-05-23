@@ -9,7 +9,16 @@
 --         , ("!"    , Left  (Pair False ())) ]
 -- :}
 --
--- Applying 'show' to it results in the fairly dense representation
+-- Or this raw list:
+--
+-- >>> :{
+-- let listExample =
+--         [ ("hello", Left  (Pair True ()))
+--         , ("world", Right (Record { r1 = ('c', -1.2e34), r2 = 123 }))
+--         , ("!"    , Left  (Pair False ())) ]
+-- :}
+--
+-- Applying 'show' to the nested example results in the fairly dense representation
 --
 -- >>> print nestedExample
 -- fromList [("!",Left (Pair False ())),("hello",Left (Pair True ())),("world",Right (Record {r1 = ('c',-1.2e34), r2 = 123}))]
@@ -21,6 +30,13 @@
 -- fromList [("!",Left (Pair False ()))
 --          ,("hello",Left (Pair True ()))
 --          ,("world",Right (Record {r1 = ('c',-1.2e34),r2 = 123}))]
+--
+-- And lists look good, too.
+--
+-- >>> prettyPrint listExample
+-- [("hello",Left (Pair True ()))
+-- ,("world",Right (Record {r1 = ('c',-1.2e34),r2 = 123}))
+-- ,("!",Left (Pair False ()))]
 module Text.Show.Prettyprint (
     prettifyShow,
     prettifyToDoc,
