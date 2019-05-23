@@ -1,3 +1,8 @@
+# 0.3
+
+- Fix lists not being prettified at the top level (#6)
+- Fix lists in nested data structures not being aligned (#6)
+
 # 0.2.3
 
 - Fix escaping of backslashes (#5)
