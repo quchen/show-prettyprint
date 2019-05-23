@@ -1,3 +1,7 @@
+# 0.4 (next)
+
+- Fix alignment of children of multiline lists
+
 # 0.3
 
 - Fix lists not being prettified at the top level (#6)

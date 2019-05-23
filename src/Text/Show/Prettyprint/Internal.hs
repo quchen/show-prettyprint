@@ -145,7 +145,7 @@ tupleP = p <?> "tuple"
 listP :: Parser (Doc ann)
 listP = p <?> "list"
   where
-    p = fmap (encloseSep lbracket rbracket Ppr.comma)
+    p = fmap (encloseSep lbracket rbracket Ppr.comma . map align)
              (Tri.brackets (sepBy argP Tri.comma))
 
 -- |
