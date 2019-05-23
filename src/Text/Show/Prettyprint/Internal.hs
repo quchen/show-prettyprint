@@ -2,30 +2,6 @@
 
 -- | __This module may change arbitrarily between versions.__ It is exposed only
 -- for documentary purposes.
---
--- It's also home to this crazier doctest:
---
--- >>> :{
--- testParse valueP (concat
---     ["ApiGroup {name = \"API Key\" ,endpoints = [Endpoint {path = "
---     ,"\"/v1/auth/info\" ,description = \"Retrieve information about the"
---     ," current API key.\" ,needsAPIKey = \"Yes\" ,method = \"GET\" ,"
---     ,"requiredAccess = \"\"} ,Endpoint {path = \"/v1/auth/info\" ,"
---     ,"description = \"Retrieve information about the current API key.\" ,"
---     ,"needsAPIKey = \"Yes\" ,method = \"GET\" ,requiredAccess = \"\"}]}]"
---     ])
--- :}
--- ApiGroup {name = "API Key"
---          ,endpoints = [Endpoint {path = "/v1/auth/info"
---                                 ,description = "Retrieve information about the current API key."
---                                 ,needsAPIKey = "Yes"
---                                 ,method = "GET"
---                                 ,requiredAccess = ""}
---                       ,Endpoint {path = "/v1/auth/info"
---                                 ,description = "Retrieve information about the current API key."
---                                 ,needsAPIKey = "Yes"
---                                 ,method = "GET"
---                                 ,requiredAccess = ""}]}
 module Text.Show.Prettyprint.Internal (
     parseShowString,
     shownP,
@@ -57,6 +33,7 @@ import Text.Trifecta             as Tri
 --         Success x -> print x
 --         Failure ErrInfo{ _errDoc = e } -> putStrLn ("ERROR " ++ show (plain e))
 -- :}
+
 
 
 parseShowString :: String -> Result (Doc ann)
@@ -183,3 +160,27 @@ recordP = p <?> "record"
         _ <- token (Tri.char '=')
         rhs <- argP
         pure (lhs <+> pretty '=' <+> align rhs)
+
+-- $
+-- Regression (#6): Nested lists were not aligned properly
+-- >>> :{
+-- testParse valueP (concat
+--     ["ApiGroup {name = \"API Key\" ,endpoints = [Endpoint {path = "
+--     ,"\"/v1/auth/info\" ,description = \"Retrieve information about the"
+--     ," current API key.\" ,needsAPIKey = \"Yes\" ,method = \"GET\" ,"
+--     ,"requiredAccess = \"\"} ,Endpoint {path = \"/v1/auth/info\" ,"
+--     ,"description = \"Retrieve information about the current API key.\" ,"
+--     ,"needsAPIKey = \"Yes\" ,method = \"GET\" ,requiredAccess = \"\"}]}]"
+--     ])
+-- :}
+-- ApiGroup {name = "API Key"
+--          ,endpoints = [Endpoint {path = "/v1/auth/info"
+--                                 ,description = "Retrieve information about the current API key."
+--                                 ,needsAPIKey = "Yes"
+--                                 ,method = "GET"
+--                                 ,requiredAccess = ""}
+--                       ,Endpoint {path = "/v1/auth/info"
+--                                 ,description = "Retrieve information about the current API key."
+--                                 ,needsAPIKey = "Yes"
+--                                 ,method = "GET"
+--                                 ,requiredAccess = ""}]}
