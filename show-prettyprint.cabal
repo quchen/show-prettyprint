@@ -1,5 +1,5 @@
 name:                show-prettyprint
-version:             0.3
+version:             0.3.0.1
 synopsis:            Robust prettyprinter for output of auto-generated Show
                      instances
 description:         See README.md
@@ -36,6 +36,9 @@ test-suite doctest
   main-is:             Main.hs
   build-depends:       base
                      , doctest >= 0.9
+                     , trifecta
+                     , prettyprinter
+                     , containers
   ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
