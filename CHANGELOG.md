@@ -2,6 +2,10 @@
 
 - Fix alignment of children of multiline lists
 
+# 0.3.0.1
+
+- Fix dependencies of Doctest suite
+
 # 0.3
 
 - Fix lists not being prettified at the top level (#6)
