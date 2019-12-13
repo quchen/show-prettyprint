@@ -3,12 +3,10 @@
 -- failure.
 --
 -- >>> putStrLn (prettifyShowErr "Imbalanced (Parenthesis)) here")
--- ERROR (interactive):1:25: error: expected: char literal,
---     end of input, identifier, list,
---     number, record, string literal,
---     tuple, unit
--- Imbalanced (Parenthesis)) here<EOF>
---                         ^
+-- ERROR (interactive):1:25: error: expected: char literal, end of input, identifier,
+--     list, number, record, string literal, tuple, unit
+-- 1 | Imbalanced (Parenthesis)) here<EOF> 
+--   |                         ^           
 module Text.Show.Prettyprint.Diagnostic (
     prettifyShowErr,
     prettyShowErr,
