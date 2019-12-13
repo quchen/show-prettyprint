@@ -22,11 +22,8 @@ library
                      , Text.Show.Prettyprint.Diagnostic
                      , Text.Show.Prettyprint.Internal
   build-depends:       base >= 4.7 && < 5
-                     , trifecta >= 1.6
+                     , trifecta >= 2.1
                      , prettyprinter >= 1.2
-
-                     -- Transitive dep of Trifecta, figure it out via that one
-                     , ansi-wl-pprint
   ghc-options:         -Wall
   default-language:    Haskell2010
 

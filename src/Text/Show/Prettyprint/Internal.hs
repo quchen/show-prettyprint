@@ -27,11 +27,11 @@ import Text.Trifecta             as Tri
 
 -- $setup
 --
--- >>> import Text.PrettyPrint.ANSI.Leijen (plain)
+-- >>> import Data.Text.Prettyprint.Doc (unAnnotate)
 -- >>> :{
 -- let testParse p s = case parseString p mempty s of
 --         Success x -> print x
---         Failure ErrInfo{ _errDoc = e } -> putStrLn ("ERROR " ++ show (plain e))
+--         Failure ErrInfo{ _errDoc = e } -> putStrLn ("ERROR " ++ show (unAnnotate e))
 -- :}
 
 
